@@ -1,0 +1,86 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block body %}
+
+
+    <!--Main Slider-->
+    <section class="main-slider">
+
+        <div class="tp-banner-container">
+            <div class="tp-banner">
+                <ul>
+
+                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1000"
+                        data-thumb="{% static 'images/slider/1.jpg' %}" data-saveperformance="off"
+                        data-title="Awesome Title Here">
+                        <img src="{% static 'images/slider/جوتن.jpg' %}" alt="" data-bgposition="center top"
+                            data-bgfit="cover" data-bgrepeat="no-repeat">
+
+
+                    </li>
+
+                    <li data-transition="zoomin" data-slotamount="1" data-masterspeed="1000"
+                        data-thumb="{% static 'images/slider/2.jpg' %}" data-saveperformance="off"
+                        data-title="Awesome Title Here">
+                        <img src="{% static 'images/slider/2.jpeg' %}" alt="" data-bgposition="center top"
+                            data-bgfit="cover" data-bgrepeat="no-repeat">
+
+                    </li>
+
+                    <li data-transition="zoomout" data-slotamount="1" data-masterspeed="1000"
+                        data-thumb="{% static 'images/slider/3.jpg' %}" data-saveperformance="off"
+                        data-title="Awesome Title Here">
+                        <img src="{% static 'images/slider/3.jpeg' %}" alt="" data-bgposition="center top"
+                            data-bgfit="cover" data-bgrepeat="no-repeat">
+
+                    </li>
+
+                </ul>
+                <div class="tp-bannertimer"></div>
+            </div>
+        </div>
+    </section>
+    <!-- main slider end -->
+
+
+
+
+
+
+    
+    <section class="latest-products sec-pad centred">
+        <div class="container">
+            <div class="sec-title"><h2>{{category.title}}</h2></div>
+            <div class="row">
+                {% for product in products  %}
+                <div class="col-md-3 col-sm-6 col-xs-12 shop-column">
+                    <div class="overlay-style-two">
+                        <div class="item">
+                            <figure class="img-box">
+                                <img src="{{ product.image.url }}" alt="">
+                                <div class="default-overlay-outer">
+                                    <div class="inner">
+                                        <div class="content-layer">
+                                            <a href="{% url 'add_to_cart' product.id %}" class="btn-one">Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </figure>
+                            <div class="lower-content center">
+                                <h4><a href="{% url 'details' product.name %}">{{product.name}}</a></h4>
+                                <div class="text"><span>{{product.price}}</span> دينار عراقي</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="button">
+                <a href="{% url 'products' %}" class="btn-three">shop more items</a>
+            </div>
+        </div>
+    </section>
+
+
+
+{% endblock %}

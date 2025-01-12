@@ -1,0 +1,174 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block body %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Addina - Multipurpose eCommerce HTML Template
+ 
+    </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets1/imgs/favicon.png' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+ 
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'assets1/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/meanmenu.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/swiper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/fontawesome-pro.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/spacing.css' %}">
+    <link rel="stylesheet" href="{% static 'assets1/css/main.css' %}">
+ </head>
+ <body>
+
+    
+
+
+ 
+    <!-- Body main wrapper start -->
+    <main>
+ 
+       <!-- Breadcrumb area start  -->
+       <div class="breadcrumb__area theme-bg-1 p-relative z-index-11 pt-95 pb-95">
+          <div class="breadcrumb__thumb" data-background="{% static 'assets1/imgs/bg/breadcrumb-bg.jpg' %}"></div>
+          <div class="container">
+             <div class="row justify-content-center">
+                <div class="col-xxl-12">
+                   <div class="breadcrumb__wrapper text-center">
+                      <h2 class="breadcrumb__title">المشتريات</h2>
+                      <div class="breadcrumb__menu">
+                         <nav>
+                            <ul>
+                               <li><span><a href="{% url 'home' %}">Home</a></span></li>
+                               <li><span>Cart for {{ cart.user.username }}</span></li>
+                            </ul>
+                         </nav>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+       <!-- Breadcrumb area start  -->
+ 
+       <!-- Cart area start  -->
+       <div class="cart-area section-space">
+          <div class="container">
+             <div class="row">
+                <div class="col-12">
+                   <div class="table-content table-responsive">
+                      <table class="table">
+                         <thead>
+                            <tr>
+                               <th class="product-thumbnail">صورة المنتج</th>
+                               <th class="cart-product-name">اسم المنتج</th>
+                               <th class="product-price">سعر القطعة</th>
+                               <th class="product-quantity">العدد</th>
+                               <th class="product-subtotal">اللون</th>
+                               <th class="product-remove">الكلي</th>
+                               <th class="product-remove">حذف</th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                           {% for item in cart_items %}
+                           <tr>
+                               <td class="product-thumbnail">
+                                       <img src="{{ item.product.image.url }}" alt="img">
+                               </td>
+                               <td class="product-name">{{ item.product.name }}
+                               </td>
+                               <td class="product-price">
+                                   <span class="amount">دينار عراقي {{ item.product.price }}</span>
+                               </td>
+                               <td class="product-quantity text-center">
+                                   <div class="product-quantity mt-10 mb-10">
+                                       <a href="{% url 'increase_quantity' item.product.id %}" class="btn btn-sm btn-success">+</a>
+                                       <span>{{ item.quantity }}</span>
+                                       <a href="{% url 'decrease_quantity' item.product.id %}" class="btn btn-sm btn-danger">-</a>
+                                   </div>
+                               </td>
+                               <td class="product-color">
+                                 <form method="POST" action="{% url 'update_color' item.id %}">
+                                     {% csrf_token %}
+                                     <select name="new_color" id="color-select" onchange="this.form.submit()">
+                                         {% for color in colors %}
+                                             <option style="background-color: {{ color.hex_value }}" value="{{ color.number }}" {% if color.number == item.color %}selected{% endif %}>
+                                                 <span>{{ color.number }} - {{ color.name }}</span>
+                                             </option>
+                                         {% endfor %}
+                                     </select>
+                                 </form>
+                             </td>
+                               <td class="product-subtotal">
+                                   <span class="amount">دينار عراقي {{ item.get_total_price }}</span>
+                               </td>
+                               <td class="product-remove">
+                                   <form method="POST" action="{% url 'remove_from_cart' item.product.id %}">
+                                       {% csrf_token %}
+                                       <button type="submit" style="border: none; background: none;">
+                                           <i class="fa fa-times" style="color: red; cursor: pointer;"></i>
+                                       </button>
+                                   </form>
+                               </td>
+                           </tr>
+                       {% endfor %}
+
+                         </tbody>
+                      </table>
+                   </div>
+                   <div class="row">
+                      <div class="col-lg-6 ml-auto">
+                         <div class="cart-page-total">
+                            <h2>المبلغ النهائي</h2>
+                            <ul class="mb-20">
+                               <li>المجموع <span>دينار {{ total_price }}</span></li>
+                            </ul>
+                            <form method="POST" action="{% url 'payment_page' %}">
+                              {% csrf_token %}
+                              <button type="submit" class="fill-btn">
+                                  <span class="fill-btn-inner">
+                                      <span class="fill-btn-normal">الدفع</span>
+                                      <span class="fill-btn-hover">ادفع</span>
+                                  </span>
+                              </button>
+                          </form>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+       <!-- Cart area end  -->
+ 
+    </main>
+    <!-- Body main wrapper end -->
+ 
+
+ 
+    <!-- JS here -->
+    <script src="{% static 'assets1/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets1/js/waypoints.min.js' %}"></script>
+    <script src="{% static 'assets1/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets1/js/meanmenu.min.js' %}"></script>
+    <script src="{% static 'assets1/js/swiper.min.js' %}"></script>
+    <script src="{% static 'assets1/js/slick.min.js' %}"></script>
+    <script src="{% static 'assets1/js/magnific-popup.min.js' %}"></script>
+    <script src="{% static 'assets1/js/counterup.js' %}"></script>
+    <script src="{% static 'assets1/js/wow.js' %}"></script>
+    <script src="{% static 'assets1/js/ajax-form.js' %}"></script>
+    <script src="{% static 'assets1/js/beforeafter.jquery-1.0.0.min.js' %}"></script>
+    <script src="{% static 'assets1/js/main.js' %}"></script>
+    <!-- إضافة JavaScript لـ Select2 -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+ </body>
+ </html>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/font-awesome/all.min.css' %}">
+
+    <!-- tailwind css -->
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+</head>
+<body>
+    
+
+    <main>
+       
+
+
+        <!-- main content -->
+        <div class="py-[120px] xl:py-[80px] md:py-[60px]">
+            <div class="mx-[19.71%] xxxl:mx-[14.71%] xxl:mx-[9.71%] xl:mx-[5.71%] md:mx-[12px]">
+                <!-- cover -->
+                <div>
+                    <img src="{{ product.image.url }}" alt="Course Cover" class="rounded-[8px] w-full aspect-[1170/552]">
+                </div>
+
+                <!-- txt -->
+                <div class="flex gap-[30px] lg:gap-[20px] md:flex-col md:items-center">
+                    <div class="left max-w-full grow">
+                        <div>
+                            <h4 class="font-semibold text-[30px] lg:text-[27px] xs:text-[25px] xxs:text-[23px] text-edblue mb-[23px]">{{product.name}}</h4>
+
+                            <!-- course meta -->
+                            <div class="border-b border-[#E5E5E5] pb-[25px] flex xs:flex-wrap items-center gap-[60px] lg:gap-[40px] xs:gap-[20px] mb-[34px]">
+                                
+
+                                <!-- single info -->
+                                <div class="flex items-center gap-[10px] border-l border-[#CDCDCD] first:border-none pl-[10px] first:pl-0">
+                                    <div>
+                                        <h6 class="font-medium text-edblue leading-[1.2]">المجموعة</h6>
+                                        <span class="font-medium text-[14px] text-edgray leading-[1]">{{product.category}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-[10px] border-l border-[#CDCDCD] first:border-none pl-[10px] first:pl-0">
+                                    <div>
+                                        <h6 class="font-medium text-edblue leading-[1.2]">السعر</h6>
+                                        <span class="font-medium text-[14px] text-edgray leading-[1]">{{product.price}} دينار</span>
+                                    </div>
+                                </div>
+
+                            
+                            </div>
+
+                            <!-- tabs container -->
+                            <div>
+                                <!-- tab navs  -->
+                                <div class="ed-course-details-tab-navs border border-[#E5E5E5] rounded-[10px] p-[20px] lg:p-[15px] flex gap-[16px] *:h-[56px] sm:*:h-[46px] *:rounded-[8px] *:flex-auto *:bg-edpurple/[06%] *:px-[20px] lg:*:px-[15px] *:font-semibold overflow-auto">
+                                    <button class="tab-nav active" data-tab="overview" style="background-color:#5B3AEE ;"><a style="background-color:#5B3AEE ; border: #5B3AEE;" href="{% url 'add_to_cart' product.id %}" class="btn-one">Add to cart</a></button>
+                                </div>
+
+                                <!-- tabs -->
+                                <div class="ed-course-details-tabs">
+                                    <!-- tab 01 -->
+                                    <div id="overview" class="ed-tab duration-[400ms] active">
+                                        <div>
+                                            <h4 class="font-semibold text-[30px] lg:text-[27px] xs:text-[25px] xxs:text-[23px] text-edblue mt-[28px] mb-[15px]">وصف المنتج</h4>
+                                            <div class="space-y-[10px]">
+                                                <p class="text-edgray">{{ product.description|safe }}</p>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+
+                           
+                            
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
+{% endblock %}
+
