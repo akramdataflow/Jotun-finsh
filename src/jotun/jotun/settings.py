@@ -24,10 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure--bqof15wiq1h2wl4+$j*soajbbj#zoalpeto0nwju&42ng$ftr"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['emmar.io', 'www.emmar.com'] 
 
 # Application definition
 
